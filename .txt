@@ -1,0 +1,12 @@
+Start bosa salomlashadi ismini soredi
+ism kelsa raqamini soredi faol nemeri
+raqam kelsa lakatsiya soredi
+talaba yoki talaba emasligini
+lakatsiya kelgandan keyin qaysi vaqtlar ishlay oladi
+filliallar
+    Guliston vakansiya, Toshkent vakansiya
+file jonating
+    pdf file yuklaydi etiboringiz uchun rahmat
+
+
+fililal tanlashda yoniga icon qoyvoan sababi shu icon blan split qilib topib olishim uchun 
