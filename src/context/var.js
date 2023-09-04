@@ -7,10 +7,11 @@ export const savollar = {
     s5: "Qaysi vaqtlar ishlay olasiz:",
     ha: "Ha 👨‍🎓",
     yoq: "Yoq 👨‍💻",
-    full: "To'liq kun 🌃",
-    part: "Yarim kun 🌇",
+    full: "2 smen 🌃",
+    part: "1 smen 🌇",
     fil: "Filliallardan birini tanlang:",
     yonalish: "Yo'nalishni tanlang:",
+    CV: "Avval ishlagan joylaringizni fayl shaklida Resume sifatida yuboring:",
     yoqVakansiya: "Hozircha Vakansiyalar yoq",
     finish: "Malumot uchun rahmat! \nTez orada siz bilan bog'lanamiz"
 }
