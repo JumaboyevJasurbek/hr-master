@@ -46,35 +46,4 @@ export const deleteVakansiya = "DELETE from vakansiya where vakansiya = $1"
         fillial int,
         FOREIGN KEY (fillial) REFERENCES fillial(id) ON DELETE CASCADE
     );
-
-    Fillial
-    INSERT INTO fillial(shahar) values('Toshkent vil.');
-    INSERT INTO fillial(shahar) values('Toshkent shah.');
-    INSERT INTO fillial(shahar) values('Sirdaryo');
-    INSERT INTO fillial(shahar) values('Namangan');
-    INSERT INTO fillial(shahar) values('Fargona');
-
-    
-    Vakansiya
-    INSERT INTO vakansiya(vakansiya, fillial) values('HR mutahasis', 1);
-    INSERT INTO vakansiya(vakansiya, fillial) values('IT Ustoz', 1);
-    INSERT INTO vakansiya(vakansiya, fillial) values('SMM menejer', 1);
-    INSERT INTO vakansiya(vakansiya, fillial) values('Ustoz', 1);
-    INSERT INTO vakansiya(vakansiya, fillial) values('Frontend Ustoz', 1);
-    INSERT INTO vakansiya(vakansiya, fillial) values('HR mutahasis', 2);
-    INSERT INTO vakansiya(vakansiya, fillial) values('IT Ustoz', 2);
-    INSERT INTO vakansiya(vakansiya, fillial) values('SMM menejer', 2);
-    INSERT INTO vakansiya(vakansiya, fillial) values('Ustoz', 2);
-    INSERT INTO vakansiya(vakansiya, fillial) values('Frontend Ustoz', 2);
-    INSERT INTO vakansiya(vakansiya, fillial) values('HR mutahasis', 3);
-    INSERT INTO vakansiya(vakansiya, fillial) values('IT Ustoz', 3);
-    INSERT INTO vakansiya(vakansiya, fillial) values('SMM menejer', 3);
-    INSERT INTO vakansiya(vakansiya, fillial) values('Ustoz', 3);
-    INSERT INTO vakansiya(vakansiya, fillial) values('Frontend Ustoz', 3);
-    INSERT INTO vakansiya(vakansiya, fillial) values('HR mutahasis', 4);
-    INSERT INTO vakansiya(vakansiya, fillial) values('IT Ustoz', 4);
-    INSERT INTO vakansiya(vakansiya, fillial) values('SMM menejer', 4);
-    INSERT INTO vakansiya(vakansiya, fillial) values('Ustoz', 4);
-    INSERT INTO vakansiya(vakansiya, fillial) values('Frontend Ustoz', 4);
-
 */ 
