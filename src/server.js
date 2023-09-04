@@ -36,53 +36,62 @@ bot.on('message', async (msg) => {
     const { chat: { id: chatId }, text, reply_to_message } = msg
     try {
         if (chatId != admin) {
-            if (text !== '/start' && reply_to_message?.text) {
-                const reply = reply_to_message.text
-                const allUser = await a(findClient, chatId)
-                const findUser = allUser[0]
-                if (!findUser) {
-                    await a(create, chatId)
-                }
-                if (reply == savollar.s0) {
-                    await a(ismi, text, chatId)
-                    bot.sendMessage(chatId, savollar.s1, {
-                        reply_markup: {
-                            force_reply: true,
-                            selective: true
-                        }
-                    });
-                } else if (reply == savollar.s1) {
-                    console.log(text.length > 2, text.length)
-                    if (Number(text) && text.length <= 2) {
-                        await a(age, Number(text), chatId)
-                        bot.sendMessage(chatId, savollar.s2, {
-                            reply_markup: {
-                                force_reply: true,
-                                selective: true
-                            }
-                        });
-                    } else {
-                        bot.sendMessage(chatId, 'Yoshingizni tolliq kiriting! Masalan: 18');
+            if (!msg?.document) {
+                if (text !== '/start' && reply_to_message?.text) {
+                    const reply = reply_to_message.text
+                    const allUser = await a(findClient, chatId)
+                    const findUser = allUser[0]
+                    if (!findUser) {
+                        await a(create, chatId)
+                    }
+                    if (reply == savollar.s0) {
+                        await a(ismi, text, chatId)
                         bot.sendMessage(chatId, savollar.s1, {
                             reply_markup: {
                                 force_reply: true,
                                 selective: true
                             }
-                        }); 
-                    }
-                } else if (reply == savollar.s3) {
-                    if (Number(text.split('+')[1])) {
-                        await a(nomer, Number(text.split('+')[1]), chatId)
-                        bot.sendMessage(chatId, savollar.s4, {
-                            reply_markup: {
-                                keyboard: [
-                                    [savollar.ha, savollar.yoq]
-                                ],
-                                resize_keyboard: true
-                            }
                         });
-                    } else {
-                        bot.sendMessage(chatId, 'Nomer Tolliq kiriting! Masalan: +998901234567');
+                    } else if (reply == savollar.s1) {
+                        if (Number(text)) {
+                            await a(age, Number(text), chatId)
+                            bot.sendMessage(chatId, savollar.s2, {
+                                reply_markup: {
+                                    force_reply: true,
+                                    selective: true
+                                }
+                            });
+                        } else {
+                            bot.sendMessage(chatId, 'Yoshingizni tolliq kiriting! Masalan: 18');
+                            bot.sendMessage(chatId, savollar.s1, {
+                                reply_markup: {
+                                    force_reply: true,
+                                    selective: true
+                                }
+                            }); 
+                        }
+                    } else if (reply == savollar.s3) {
+                        if (Number(text.split('+')[1])) {
+                            await a(nomer, Number(text.split('+')[1]), chatId)
+                            bot.sendMessage(chatId, savollar.s4, {
+                                reply_markup: {
+                                    keyboard: [
+                                        [savollar.ha, savollar.yoq]
+                                    ],
+                                    resize_keyboard: true
+                                }
+                            });
+                        } else {
+                            bot.sendMessage(chatId, 'Nomer Tolliq kiriting! Masalan: +998901234567');
+                            bot.sendMessage(chatId, savollar.s3, {
+                                reply_markup: {
+                                    force_reply: true,
+                                    selective: true
+                                }
+                            });
+                        }
+                    } else if (reply == savollar.s2) {
+                        await a(qayer, text, chatId)
                         bot.sendMessage(chatId, savollar.s3, {
                             reply_markup: {
                                 force_reply: true,
@@ -90,76 +99,74 @@ bot.on('message', async (msg) => {
                             }
                         });
                     }
-                } else if (reply == savollar.s2) {
-                    await a(qayer, text, chatId)
-                    bot.sendMessage(chatId, savollar.s3, {
+               }
+               // ismdan qayerdaligigacha
+        
+               if (text == savollar.ha || text == savollar.yoq) {
+                    await a(talaba, text == savollar.ha ? 'Ha' : 'Yoq', chatId)
+        
+                    bot.sendMessage(chatId, savollar.s5, {
                         reply_markup: {
-                            force_reply: true,
-                            selective: true
-                        }
-                    });
-                }
-            }
-            // ismdan qayerdaligigacha
-    
-            if (text == savollar.ha || text == savollar.yoq) {
-                await a(talaba, text == savollar.ha ? 'Ha' : 'Yoq', chatId)
-    
-                bot.sendMessage(chatId, savollar.s5, {
-                    reply_markup: {
-                        keyboard: [
-                            [savollar.full, savollar.part]
-                        ],
-                        resize_keyboard: true
-                    }
-                });
-            }
-            // Talaba save vaqt create
-    
-            if (text == savollar.full || text == savollar.part) {
-                await a(vaqt, text == savollar.full ? savollar.full.split(' ')[0] : savollar.part.split(' ')[0], chatId)
-                const fillials = await a(allFillial)
-                bot.sendMessage(chatId, savollar.fil, {
-                    reply_markup: {
-                        keyboard: fKeyboard(fillials),
-                        resize_keyboard: true
-                    }
-                });
-            }
-            // Vaqt save fillial create
-    
-            if (await ifFillial(text)) {
-                const fillialFind = await a(findFillial, text)
-                await a(fillial, fillialFind[0]?.id, chatId)
-                const render = await vakansiyaRender(text)
-                if (render?.length) {
-                    bot.sendMessage(chatId, savollar.yonalish, {
-                        reply_markup: {
-                            keyboard: render,
+                            keyboard: [
+                                [savollar.full, savollar.part]
+                            ],
                             resize_keyboard: true
                         }
                     });
-                } else {
-                    bot.sendMessage(chatId, savollar.yoqVakansiya);
+               }
+               // Talaba save vaqt create
+        
+               if (text == savollar.full || text == savollar.part) {
+                    await a(vaqt, text == savollar.full ? savollar.full.split(' ')[0] : savollar.part.split(' ')[0], chatId)
+                    const fillials = await a(allFillial)
+                    bot.sendMessage(chatId, savollar.fil, {
+                        reply_markup: {
+                            keyboard: fKeyboard(fillials),
+                            resize_keyboard: true
+                        }
+                    });
+               }
+                // Vaqt save fillial create
+        
+                if (await ifFillial(text)) {
+                    const fillialFind = await a(findFillial, text)
+                    await a(fillial, fillialFind[0]?.id, chatId)
+                    const render = await vakansiyaRender(text)
+                    if (render?.length) {
+                        bot.sendMessage(chatId, savollar.yonalish, {
+                            reply_markup: {
+                                keyboard: render,
+                                resize_keyboard: true
+                            }
+                        });
+                    } else {
+                        bot.sendMessage(chatId, savollar.yoqVakansiya);
+                    }
                 }
-            }
-            // Fillial save Vakansiya create
-    
-            if (await findVakansiyaFn(chatId, text)) {
-                await a(vakansiya, await findVakansiyaFn(chatId, text), chatId)
+                // Fillial save Vakansiya create
+        
+                if (await findVakansiyaFn(chatId, text)) {
+                    await a(vakansiya, await findVakansiyaFn(chatId, text), chatId)
+                    bot.sendMessage(chatId, savollar.CV, {
+                        reply_markup: {
+                            remove_keyboard: true
+                        }
+                    });
+                }
+                // Vakansiya save PDF create    
+            } else {
                 const client = await a(findClient, chatId)
                 const find = client[0]
                 const fillial = await a(findFillialID, find.fillial)
-                const findVakansiya = await a(findVakansiyaID, find.vakansiya)
+                const vakansiya = await a(findVakansiyaID, find.vakansiya)
                 const malumot = `
-                    Telegram id: ${find.id},\nIsmi: ${find.ism},\nYoshi: ${find.age},\nNomeri: ${find.number},\nQayerda Yashashi: ${find.qayer},\nTalabami: ${find.talaba},\nIshlash Vaqti: ${find.vaqt},\nQayerda Ishlamoqchi: ${fillial[0]?.shahar},\nQaysi Yonalish: ${findVakansiya[0]?.vakansiya}
+                    Telegram id: ${find.id},\nIsmi: ${find.ism},\nYoshi: ${find.age},\nNomeri: ${find.number},\nQayerda Yashashi: ${find.qayer},\nTalabami: ${find.talaba},\nIshlash Vaqti: ${find.vaqt},\nQayerda Ishlamoqchi: ${fillial[0]?.shahar},\nQaysi Yonalish: ${vakansiya[0]?.vakansiya}
                 `
     
                 bot.sendMessage('6538161335', malumot)
+                bot.sendDocument('6538161335', msg.document?.file_id)
                 bot.sendMessage(chatId, savollar.finish)
             }
-            // Vakansiya save PDF create    
-                
     
         } else {
             const reply = reply_to_message?.text
